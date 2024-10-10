@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>抽签工具</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        input, button, textarea {
+            margin: 10px;
+        }
+        #result {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+        textarea {
+            width: 80%;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h1>抽签工具</h1>
+    <textarea id="optionInput" placeholder="请在此处粘贴选项，每行一个"></textarea>
+    <br />
+    <button onclick="importFromInput()">导入选项</button>
+    <br />
+    <label for="allowRepeat">是否允许重复抽取：</label>
+    <input type="checkbox" id="allowRepeat">
+    <br />
+    <button onclick="draw()">开始抽签</button>
+    <div id="result"></div>
+
+    <script>
+        let options = [];
+        let usedOptions = [];
+
+        // 从输入框导入内容
+        function importFromInput() {
+            const inputText = document.getElementById('optionInput').value;
+            options = inputText.split('\n').map(option => option.trim()).filter(option => option);
+            usedOptions = [];
+            document.getElementById('result').innerText = '导入成功，共 ' + options.length + ' 个选项';
+        }
+
+        // 抽签逻辑
+        function draw() {
+            const allowRepeat = document.getElementById('allowRepeat').checked;
+
+            if (options.length === 0) {
+                document.getElementById('result').innerText = '请先导入选项';
+                return;
+            }
+
+            let availableOptions = allowRepeat ? options : options.filter(option => !usedOptions.includes(option));
+
+            if (availableOptions.length === 0) {
+                document.getElementById('result').innerText = '所有选项已抽取完毕';
+                return;
+            }
+
+            const randomIndex = Math.floor(Math.random() * availableOptions.length);
+            const selectedOption = availableOptions[randomIndex];
+
+            if (!allowRepeat) {
+                usedOptions.push(selectedOption);
+            }
+
+            document.getElementById('result').innerText = '抽中的选项是：' + selectedOption;
+        }
+    </script>
+</body>
+</html>

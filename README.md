@@ -49,7 +49,8 @@
 
 ## 示例截图 | Example Screenshot
 
-> Add a screenshot here (if available)
+![image](https://github.com/user-attachments/assets/6e253efc-c149-402b-9acc-d8db4bb190f7)
+
 
 ---
 
